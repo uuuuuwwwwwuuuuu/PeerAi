@@ -41,6 +41,12 @@ const RightMainCardElements = styled.div`
     max-width: 800px;
     width: 100%;
     height: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+    }
 `;
 
 const MainCard: FC<IProps> = ({title, info, second_info, gifSrc}) => {
@@ -48,11 +54,11 @@ const MainCard: FC<IProps> = ({title, info, second_info, gifSrc}) => {
         <article className="main_card_article">
             <LeftMainCardElements>
                 <h2>{title}</h2>
-                <p>{info}</p>
+                {info}
                 <p>{second_info}</p>
             </LeftMainCardElements>
             <RightMainCardElements>
-
+                <img src={gifSrc} alt="gif" />
             </RightMainCardElements>
         </article>
     )

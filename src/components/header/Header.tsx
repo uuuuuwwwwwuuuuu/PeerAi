@@ -9,6 +9,7 @@ const HeaderComponent = styled.header`
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-bottom: 1px solid #EEEEEE
 `;
 
 const HeaderLine = styled.div`
@@ -81,7 +82,7 @@ export const StyledButton = styled.button<{fill: boolean}>`
     font-size: 2rem;
     border-radius: 100px;
     color: ${({theme, fill}) => fill ? theme.bgMain : theme.accent};
-    border: ${({theme, fill}) => fill ? '' : '1px solid ' + theme.accent}
+    border: ${({theme, fill}) => fill ? '' : '1px solid ' + theme.accent};
 `;
 
 const Header: FC = () => {
@@ -122,6 +123,7 @@ const Header: FC = () => {
                     <StyledButton fill={false}>More Details</StyledButton>
                 </div>
             </HeaderInfo>
+            <hr />
         </HeaderComponent>
     )
 }

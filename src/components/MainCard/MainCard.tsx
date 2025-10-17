@@ -7,30 +7,53 @@ interface IProps {
     info: React.ReactNode;
     second_info: string;
     gifSrc: string;
-    leftElementsmaxWith: number;
 }
 
-const LeftMainCardElements = styled.div<{_maxWidth: number}>`
+const LeftMainCardElements = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
     align-items: flex-start;
-    max-width: ${({_maxWidth}) => `${_maxWidth}px`};
+    max-width: 433px;
     width: 100%;
+
+    h2 {
+        font-family: Inter;
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 100%;
+        letter-spacing: -3%;
+        color: ${({theme}) => theme.accent};
+        margin: 0;
+    }
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -3%;
+        color: ${({theme}) => theme.text};
+    }
 `;
 
 const RightMainCardElements = styled.div`
-    
+    max-width: 800px;
+    width: 100%;
+    height: 100%;
 `;
 
-const MainCard: FC<IProps> = ({title, info, second_info, gifSrc, leftElementsmaxWith}) => {
+const MainCard: FC<IProps> = ({title, info, second_info, gifSrc}) => {
     return (
         <article className="main_card_article">
-            <LeftMainCardElements _maxWidth={leftElementsmaxWith}>
+            <LeftMainCardElements>
                 <h2>{title}</h2>
                 <p>{info}</p>
                 <p>{second_info}</p>
             </LeftMainCardElements>
+            <RightMainCardElements>
+
+            </RightMainCardElements>
         </article>
     )
 };

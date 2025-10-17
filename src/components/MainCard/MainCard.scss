@@ -1,13 +1,10 @@
+@import '../../constants';
+
 .main_card_article {
     height: 500px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    h2 {
-        font-weight: 700;
-        font-size: 36px;
-        letter-spacing: -3%;
-    }
+    text-align: start;
 }

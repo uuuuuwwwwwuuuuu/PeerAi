@@ -9,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter';
 }
 
 code {
@@ -20,6 +21,11 @@ html {
   font-size: 10px;
 }
 
+* {
+  box-sizing: border-box;
+  
+}
+
 .App {
   height: 100svh;
 }
@@ -28,4 +34,5 @@ a {
   color: $text;
   outline: none;
   text-decoration: none;
+  display: block;
 }

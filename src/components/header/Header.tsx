@@ -24,10 +24,8 @@ const HeaderLine = styled.div`
     a {
         font-family: Inter;
         font-weight: 400;
-        font-style: Regular;
-        font-size: 24px;
+        font-size: 2.4rem;
         line-height: 100%;
-        letter-spacing: 0%;
         text-align: center;
     }
 `;
@@ -53,7 +51,7 @@ const HeaderInfo = styled.div`
     p {
         font-family: Figtree;
         font-weight: 500;
-        font-size: 24px;
+        font-size: 2.4rem;
         text-align: center;
         color: ${({theme}) => theme.textSecond};
     }

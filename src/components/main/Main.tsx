@@ -1,6 +1,55 @@
 import { FC } from 'react';
 import './Main.scss';
 import MainCard from '../MainCard/MainCard';
+import styled from 'styled-components';
+import PriceCard from '../PriceCard/PriceCard';
+
+const Prices = styled.div`
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${({theme}) => theme.bgSecond};
+`;
+
+const CompareWrapper = styled.div`
+    display: flex;
+    gap: 15px;
+    align-self: self-start;
+    height: 32px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 38px;
+
+    span {
+        font-family: JetBrains Mono;
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 30px;
+        letter-spacing: -0.27px;
+        text-transform: uppercase;
+    }
+`;
+
+const CompareButton = styled.div`
+    padding: 8px 13px;
+    display: flex;
+    gap: 6px;
+    border-radius: 6px;
+    border: 1px solid ${({theme}) => theme.accent};
+    align-items: center;
+
+    span {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 1.2rem;
+        line-height: 12px;
+        letter-spacing: -0.18px;
+        text-align: center;
+        text-transform: capitalize;
+    }
+`;
 
 const Main: FC = () => {
     return (
@@ -25,6 +74,32 @@ const Main: FC = () => {
                     gifSrc={`${process.env.PUBLIC_URL}/videos/third_main_card.gif`}
                 />
             </section>
+            <Prices>
+                <div style={{gap: 0}} className="main_container">
+                    <h3>Grow confidently with predictable pricing</h3>
+                    <CompareWrapper>
+                        <span>COMPARE</span>
+                        <CompareButton>
+                            <img src={`${process.env.PUBLIC_URL}/icons/calculator.svg`} alt="calculator icon" />
+                            <span>Calculator</span>
+                        </CompareButton>
+                    </CompareWrapper>
+                    <section className='price_cards_wrapper'>
+                        <PriceCard
+                            title='Free'
+                            info='For solo developers working on a passion project.'
+                            price={0}
+                            options={[
+                                '15 Android and 15 iOS builds',
+                                'Low-priority queue',
+                                '60 min. on CI/CD Workflows',
+                                'Submit to app stores',
+                                'Send updates to 1K MAUs',
+                            ]}
+                        />
+                    </section>
+                </div>
+            </Prices>
         </main>
     )
 }

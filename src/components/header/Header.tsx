@@ -4,14 +4,21 @@ import './Header.scss'
 
 const HeaderComponent = styled.header`
     width: 100%;
-    padding: 24px;
-    background-color: ${({theme}) => theme.bgSecond};
+    height: 810px;
+    background-color: ${({theme}) => theme.bgMain};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const HeaderLine = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: ${({theme}) => theme.bgSecond};
+    padding: 24px;
+    width: 100%;
+
 
     a {
         font-family: Inter;
@@ -21,17 +28,69 @@ const HeaderLine = styled.div`
         line-height: 100%;
         letter-spacing: 0%;
         text-align: center;
-
     }
-`
+`;
 
-const Header = () => {
+const HeaderInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    margin-top: 72px;
+    max-width: max-content;
+    width: 100%;
+    max-width: 904px;
+
+    h1 {
+        font-size: 5.6rem;
+        margin: 0;
+        span {
+            color: $accent;
+        }
+    }
+
+    p {
+        font-family: Figtree;
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
+        color: ${({theme}) => theme.textSecond};
+    }
+`;
+
+const PeerCircle = styled.div`
+    width: 100px;
+    height: 100px;
+    border: 1px solid ${({theme}) => theme.accent};
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+        height: 50px;
+    }
+`;
+
+export const StyledButton = styled.button<{fill: boolean}>`
+    height: 50px;
+    width: 190px;
+    background-color: ${({theme, fill}) => fill ? theme.accent : theme.bgMain};
+    font-family: 'Figtree';
+    font-weight: 600;
+    font-size: 2rem;
+    border-radius: 100px;
+    color: ${({theme, fill}) => fill ? theme.bgMain : theme.accent};
+    border: ${({theme, fill}) => fill ? '' : '1px solid ' + theme.accent}
+`;
+
+const Header: FC = () => {
     
     return (
         <HeaderComponent>
             <HeaderLine>
                 <nav>
-                    <img src={`${process.env.PUBLIC_URL}/icons/peer.svg`} alt="peer icon" />
+                    <img src={`${process.env.PUBLIC_URL}/icons/peer_black.svg`} alt="peer icon" />
                     <a href="#" target='_blank'>About</a>
                     <a href="#" target='_blank'>Discord</a>
                     <a href="#" target='_blank'>Github</a>
@@ -44,8 +103,25 @@ const Header = () => {
                         <a href="#" target='_blank'>sign up</a>
                     </div>
                 </div>
-
             </HeaderLine>
+            <HeaderInfo>
+                <div className='peer_wrapper'>
+                    <PeerCircle>
+                        <img src={`${process.env.PUBLIC_URL}/icons/peer_accent.svg`} alt="peer accent color" />
+                    </PeerCircle>
+                    <span>Peer AI</span>
+                </div>
+                <h1>
+                    The Open Source <span>AI-Powered</span> Code Editor
+                </h1>
+                <p>
+                    Speed up your development process by seamlessly  integrating AI into your workflow. Afraid of switching editors? No need, Pear is a fork of VSCode and retains all its features, you’ll feel right at home
+                </p>
+                <div className='header_buttons_wrapper'>
+                    <StyledButton fill={true}>Join Waitlist</StyledButton>
+                    <StyledButton fill={false}>More Details</StyledButton>
+                </div>
+            </HeaderInfo>
         </HeaderComponent>
     )
 }

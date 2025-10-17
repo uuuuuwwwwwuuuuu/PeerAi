@@ -26,6 +26,13 @@ html {
   
 }
 
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+}
+
 .App {
   height: 100svh;
 }

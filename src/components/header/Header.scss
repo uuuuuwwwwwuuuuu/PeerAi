@@ -1,3 +1,5 @@
+@import '../../constants';
+
 nav {
     display: flex;
     gap: 16px;
@@ -30,4 +32,17 @@ nav {
             margin: 0 5px;
         }
     }
+}
+
+.peer_wrapper {
+    span {
+        font-family: 'Figtree';
+        font-size: 2.8rem;
+        font-weight: 700;
+    }
+}
+
+.header_buttons_wrapper {
+    display: flex;
+    gap: 24px;
 }

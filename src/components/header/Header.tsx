@@ -9,7 +9,7 @@ const HeaderComponent = styled.header`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid #EEEEEE
+    border-bottom: 1px solid #EEEEEE;
 `;
 
 const HeaderLine = styled.div`
@@ -71,16 +71,16 @@ const PeerCircle = styled.div`
     }
 `;
 
-export const StyledButton = styled.button<{fill: boolean}>`
+export const StyledButton = styled.button<{_fill: boolean}>`
     height: 50px;
     width: 190px;
-    background-color: ${({theme, fill}) => fill ? theme.accent : theme.bgMain};
+    background-color: ${({theme, _fill}) => _fill ? theme.accent : theme.bgMain};
     font-family: 'Figtree';
     font-weight: 600;
     font-size: 2rem;
     border-radius: 100px;
-    color: ${({theme, fill}) => fill ? theme.bgMain : theme.accent};
-    border: ${({theme, fill}) => fill ? '' : '1px solid ' + theme.accent};
+    color: ${({theme, _fill}) => _fill ? theme.bgMain : theme.accent};
+    border: ${({theme, _fill}) => _fill ? '' : '1px solid ' + theme.accent};
 `;
 
 const Header: FC = () => {
@@ -117,8 +117,8 @@ const Header: FC = () => {
                     Speed up your development process by seamlessly  integrating AI into your workflow. Afraid of switching editors? No need, Pear is a fork of VSCode and retains all its features, you’ll feel right at home
                 </p>
                 <div className='header_buttons_wrapper'>
-                    <StyledButton fill={true}>Join Waitlist</StyledButton>
-                    <StyledButton fill={false}>More Details</StyledButton>
+                    <StyledButton _fill={true}>Join Waitlist</StyledButton>
+                    <StyledButton _fill={false}>More Details</StyledButton>
                 </div>
             </HeaderInfo>
             <hr />

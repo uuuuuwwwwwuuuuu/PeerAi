@@ -1,0 +1,231 @@
+import { FC } from "react";
+import './PriceCard.scss';
+import styled from "styled-components";
+
+const PriceArticle = styled.article<{border: 'left' | 'right' | 'none'}>`
+    padding: 21px 25px 25px 25px;
+    border: 1px solid ${({theme}) => theme.accent};
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    height: 640px;
+    border-radius: ${({border}) => {
+        if (border == 'left') {
+            return '16px 0 0 16px'
+        } else if (border == 'right') {
+            return '0 16px 16px 0';
+        } else {
+            return 0
+        }
+    }};
+`;
+
+const CardHeader = styled.div`
+    width: 100%;
+    height: 100px;
+
+    h2 {
+        font-weight: 500;
+        font-size: 2.5rem;
+        line-height: 35px;
+        letter-spacing: -0.34px;
+    }
+
+    p {
+        font-weight: 400;
+        font-size: 1.5rem;
+        line-height: 24px;
+        letter-spacing: -0.14px;
+
+        color: ${({theme}) => theme.textSecond};
+    }
+`;
+
+interface IPrors {
+    title: string;
+    info: string;
+    price: number;
+    options: string[];
+    border: 'left' | 'right' | 'none';
+}
+
+const PriceContainer = styled.div`
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+`;
+
+const PricePerMonth = styled.div<{price_value: boolean}>`
+    display: flex;
+    align-items: ${({price_value: price}) => price ? 'center' : 'flex-start'};
+`;
+
+const ExtraUsage = styled.div<{price_value: boolean}>`
+    margin-left: 3.5px;
+    width: 83px;
+    font-family: JetBrains Mono;
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 12px;
+    letter-spacing: -0.34px;
+    text-transform: uppercase;
+    align-self: ${({price_value: price}) => price ? 'center' : 'self-start'};
+    margin-top: ${({price_value: price}) => price ? 0 : '5px'};
+`;
+
+const WideStyledButton = styled.button`
+    width: 100%;
+    height: 36px;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 14px;
+    border-radius: 100px;
+    background-color: ${({theme}) => theme.accent};
+    color: ${({theme}) => theme.bgMain};
+`;
+
+const PriceCardFooter = styled.div`
+    margin-top: 41px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & > span {
+        font-family: JetBrains Mono;
+        font-weight: 500;
+        font-size: 1.2rem;
+        line-height: 18.96px;
+        letter-spacing: -0.18px;
+        text-transform: uppercase;
+        color: ${({theme}) => theme.textSecond};
+    }
+`;
+
+const StyledLi = styled.li`
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    
+    img {
+        width: 16px;
+        height: 16px
+    }
+
+    div {
+        width: 100%;
+        display: flex;
+
+        a {
+            display: flex;
+            align-items: center;
+            color: ${({theme}) => theme.link};
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+    }
+
+    span {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 1.4rem;
+        line-height: 21.98px;
+        white-space: pre;
+    }
+`;
+
+const ViewFeatures = styled.div`
+    display: flex;
+    width: 100%;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 1.4rem;
+    align-items: center;
+    gap: 4px;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+`;
+
+const OptionsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const renderIcon = (text: string) => {
+    if (text.toLowerCase().startsWith('low')) {
+        return <img src={`${process.env.PUBLIC_URL}/icons/low_priority.svg`} alt="low priority icon" />
+    } else if (text.toLowerCase().startsWith('high')) {
+        return <img src={`${process.env.PUBLIC_URL}/icons/high_priority.svg`} alt="high priority icon" />
+    } else {
+        return <img src={`${process.env.PUBLIC_URL}/icons/check_mark.svg`} alt="check mark" />
+    }
+}
+
+const LiElement: FC<{text: string}> = ({text}) => {
+    return (
+        <StyledLi>
+            {renderIcon(text)}
+            <span>{text}</span>
+        </StyledLi>
+    )
+}
+
+const PriceCard: FC<IPrors> = ({title, info, price, options, border}) => {
+    return (
+        <PriceArticle border={border}>
+            <CardHeader>
+                <h2>{title}</h2>
+                <p>{info}</p>
+            </CardHeader>
+            <PriceContainer>
+                <div className="price_per_month_container">
+                    <PricePerMonth price_value={price > 0 ? true : false}>
+                        <span className="price">{`$${price}`}</span>
+                        <ExtraUsage price_value={price > 0 ? true : false}>
+                            /month<br/>
+                            {price ? '+extra usage' : ''}
+                        </ExtraUsage>
+                    </PricePerMonth>
+                    <WideStyledButton>{price ? 'Select Plan' : 'Start for Free'}</WideStyledButton>
+                </div>
+            </PriceContainer>
+            <PriceCardFooter>
+                <OptionsWrapper>
+                    <span>INCLUDES:</span>
+                    <ul className="options_ul">
+                        {
+                            options.map((option, index) => {
+                                return <LiElement key={index} text={option} />
+                            })
+                        }
+                        {
+                            !price && <StyledLi>
+                                {renderIcon('')}
+                                <div>
+                                    <span>Access to </span>
+                                    <a href="#" target="_blank">
+                                        Launch
+                                        <img src={`${process.env.PUBLIC_URL}/icons/arrow.svg`} alt="arrow" />
+                                    </a>
+                                </div>
+                            </StyledLi>
+                        }
+                    </ul>
+                </OptionsWrapper>
+                <ViewFeatures>
+                    <img src={`${process.env.PUBLIC_URL}/icons/download.svg`} alt="download icon" />
+                    <span>View all features</span>
+                </ViewFeatures>
+            </PriceCardFooter>
+        </PriceArticle>
+    )
+};
+
+export default PriceCard;

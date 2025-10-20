@@ -59,6 +59,7 @@ interface IProps {
 const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
     return (
         <main>
+            
             <section className="main_container">
                 <MainCard 
                     title='No more switching between files.'

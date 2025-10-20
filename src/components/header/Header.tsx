@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { Dispatch, FC } from 'react';
 import styled from 'styled-components';
 import './Header.scss'
+import { Pages } from '../app/App';
 
 const HeaderComponent = styled.header`
     width: 100%;
@@ -83,7 +84,11 @@ export const StyledButton = styled.button<{$fill: boolean}>`
     border: ${({theme, $fill}) => $fill ? '' : '1px solid ' + theme.accent};
 `;
 
-const Header: FC = () => {
+interface IProps {
+    setPage: Dispatch<React.SetStateAction<Pages>>
+}
+
+const Header: FC<IProps> = ({setPage}) => {
     
     return (
         <HeaderComponent>
@@ -97,9 +102,9 @@ const Header: FC = () => {
                 <div className='header_sign_in'>
                     <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} alt="person icon" />
                     <div>
-                        <a href="#" target='_blank'>sign in</a>
+                        <button onClick={() => setPage('login')}>Sign in</button>
                         <span>/</span>
-                        <a href="#" target='_blank'>sign up</a>
+                        <button onClick={() => setPage('signup')}>Sign up</button>
                     </div>
                 </div>
             </HeaderLine>

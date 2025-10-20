@@ -7,6 +7,7 @@ import Blur from '../CalcModal/Blur';
 import Login from '../Login/Login';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { CSSProperties } from 'styled-components';
+import Footer from '../footer/Footer';
 
 export type Pages = 'main' | 'signup' | 'login';
 
@@ -21,7 +22,12 @@ function App() {
     const renderContent = (page: Pages) => {
         switch (page) {
             case 'main':
-                return <Main setIsVisibleCalcModal={setIsVisibleCalcModal} />;
+                return (
+                    <>
+                        <Main setIsVisibleCalcModal={setIsVisibleCalcModal} />
+                        <Footer />
+                    </>
+            );
             case 'login':
                 return <Login type='login' />
             case 'signup':

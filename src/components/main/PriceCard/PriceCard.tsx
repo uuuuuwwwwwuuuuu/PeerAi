@@ -10,7 +10,7 @@ const PriceArticle = styled.article<{$border: 'left' | 'right' | 'none', $size: 
     flex-direction: column;
     align-items: flex-start;
     text-align: start;
-    height: ${({$size}) => $size == 'big' ? 640 : 489};
+    height: ${({$size}) => $size == 'big' ? 640 : 489}px;
     border-radius: ${({$border}) => {
         if ($border == 'left') {
             return '16px 0 0 16px'
@@ -49,6 +49,7 @@ interface IPrors {
     price: number;
     options: string[];
     border: 'left' | 'right' | 'none';
+    size: 'big' | 'small'
 }
 
 const PriceContainer = styled.div`
@@ -177,9 +178,9 @@ const LiElement: FC<{text: string}> = ({text}) => {
     )
 }
 
-const PriceCard: FC<IPrors> = ({title, info, price, options, border}) => {
+const PriceCard: FC<IPrors> = ({title, info, price, options, border, size}) => {
     return (
-        <PriceArticle $size="big" $border={border}>
+        <PriceArticle $size={size} $border={border}>
             <CardHeader>
                 <h2>{title}</h2>
                 <p>{info}</p>

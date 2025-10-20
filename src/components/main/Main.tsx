@@ -102,6 +102,7 @@ const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
                                 'Send updates to 1K MAUs',
                             ]}
                             border='left'
+                            size='big'
                         />
                         <PriceCard
                             title='Starter'
@@ -115,6 +116,7 @@ const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
                                 'Send updates to 1K MAUs',
                             ]}
                             border='none'
+                            size='big'
                         />
                         <PriceCard
                             title='Free'
@@ -128,6 +130,7 @@ const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
                                 'Send updates to 1K MAUs',
                             ]}
                             border='none'
+                            size='big'
                         />
                         <PriceCard
                             title='Free'
@@ -141,6 +144,7 @@ const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
                                 'Send updates to 1K MAUs',
                             ]}
                             border='right'
+                            size='big'
                         />
                     </section>
                 </div>

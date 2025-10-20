@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import CalcModalProgress, { unitTypes } from "./CalcModalProgress";
+import PriceCard from "../main/PriceCard/PriceCard";
 
 const ModalWindow = styled.div`
     position: fixed;
@@ -87,12 +88,85 @@ const MainRightElements = styled.section`
     width: 100%;
 `;
 
+type Plans = 'free' | 'starter' | 'production' | 'enterprise'
+
+const renderPriceCard = (plan: Plans) => {
+    switch (plan) {
+        case 'free':
+            return (
+                <PriceCard
+                    title='Free'
+                    info='For solo developers working on a passion project.'
+                    price={0}
+                    options={[
+                        '15 Android and 15 iOS builds',
+                        'Low-priority queue',
+                        '60 min. on CI/CD Workflows',
+                        'Submit to app stores',
+                        'Send updates to 1K MAUs',
+                    ]}
+                    border='left'
+                    size='small'
+                />
+            );
+        case 'starter':
+            return (
+                <PriceCard
+                    title='Starter'
+                    info='For developers ready to launch real-world apps.'
+                    price={19}
+                    options={[
+                        '145 of builds',
+                        'High-priority queue',
+                        'Access to large workers',
+                        'Send updates to 3K MAUs',
+                    ]}
+                    border='none'
+                    size='small'
+                />
+            );
+        case 'production':
+            return (
+                <PriceCard
+                    title='Production'
+                    info='For teams building and distributing production apps.'
+                    price={199}
+                    options={[
+                        '225 builds',
+                        '2 included concurrencies',
+                        'Send updates to 50K MAUs',
+                        'Priority support',
+                        'Single sign-on (SSO)',
+                    ]}
+                    border='none'
+                    size='small'
+                />
+            );
+        case 'enterprise':
+            return (
+                <PriceCard
+                    title='Enterprise'
+                    info='For apps with scale, security, and compliance needs.'
+                    price={1999}
+                    options={[
+                        '1,000 of builds',
+                        '5 included concurrencies',
+                        'Send updates to 1M MAUs',
+                        'Slack and strategic support add-on available',
+                    ]}
+                    border='right'
+                    size='small'
+                />
+            );
+    }
+}
+
 const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
     const [MAUsValue, setMAUsValue] = useState(0);
     const [buildsValue, setBuildsValue] = useState(0);
     const [minsValue, setMinsValue] = useState(0);
 
-    const [currentPlan, setCurrentPlan] = useState<'free' | 'starter' | 'production' | 'enterprise'>('free');
+    const [currentPlan, setCurrentPlan] = useState<Plans>('free');
 
     useEffect(() => {
         if (MAUsValue > 50000 || buildsValue > 225 || minsValue > 1000) {
@@ -142,7 +216,7 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
                     </ProgressWrapper>
                 </MainLeftElements>
                 <MainRightElements>
-
+                    {renderPriceCard(currentPlan)}
                 </MainRightElements>
             </ModalMain>
         </ModalWindow>

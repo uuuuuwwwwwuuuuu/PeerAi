@@ -61,33 +61,44 @@ const ProgressBarCircle = styled.div`
     &:hover {
         transform: scale(0.85);
     }
-`
+`;
 
-const renderUnitOfMeasurement = (title: string) => {
-    if (title == 'Monthly Active Users') {
-        return 'MAUs';
-    } else if (title == 'Builds') {
-        return 'builds';
+type unitTypes = 'MAUs' | 'builds' | 'mins';
+
+interface IProps {
+    title: string;
+    unitTypes: unitTypes
+}
+
+const convertWidthToPercents = (currentWidth: number, wrapperWidth: number) => {
+    return +((currentWidth * 100) / wrapperWidth).toFixed(4);
+};
+
+const convertPercentsToValue = (unit: unitTypes, currentPercents: number) => {
+    let value: number;
+    if (unit === 'MAUs') {
+        value = currentPercents * 1000000 / 100;
+    } else if (unit === 'builds') {
+        value = currentPercents * 1000 / 100;
     } else {
-        return 'mins';
+        value = currentPercents * 1500 / 100;
     }
-}
 
-const convertWidthToPercents = (wrapperWidth: number, currentWidth: number) => {
-    return currentWidth * 100 / wrapperWidth;
-}
+    return Math.floor(value);
+};
 
-
-const CalcModalProgress: FC<{title: string}> = ({title}) => {
+const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [progressWidth, setProgressWidth] = useState(0);
+    const [progressValue, setProgressValue] = useState(0);
 
-    const progressBarRef = useRef<HTMLDivElement>(null);
-    const wrapperProgressBarRef = useRef<HTMLDivElement>(null);
+    const progressRef = useRef<HTMLDivElement | null>(null);
+
+    
 
     const slide = (event: MouseEvent<HTMLDivElement>) => {
-        if (isMouseDown && progressBarRef.current) {
-            const progressWidth = progressBarRef.current.clientWidth;
+        if (isMouseDown && progressRef.current) {
+            const progressWidth = progressRef.current.clientWidth;
             const offsetX = event.nativeEvent.offsetX;
 
             setProgressWidth(prevState => {
@@ -100,12 +111,14 @@ const CalcModalProgress: FC<{title: string}> = ({title}) => {
                     return newState;
                 }
             });
+
+            setProgressValue(convertPercentsToValue(unitTypes, progressWidth));
         }
     };
 
     const touchSlide = (event: React.TouchEvent<HTMLDivElement>) => {
-        if (isMouseDown && progressBarRef.current) {
-            const progressRect = progressBarRef.current.getBoundingClientRect();
+        if (isMouseDown && progressRef.current) {
+            const progressRect = progressRef.current.getBoundingClientRect();
             const touch = event.touches[0];
             const touchX = touch.clientX - progressRect.left;
 
@@ -120,6 +133,8 @@ const CalcModalProgress: FC<{title: string}> = ({title}) => {
                     return newProgress;
                 }
             });
+
+            setProgressValue(convertPercentsToValue(unitTypes, progressWidth));
         }
     };
 
@@ -128,11 +143,11 @@ const CalcModalProgress: FC<{title: string}> = ({title}) => {
             <ProgressInfoLine>
                 <span>{title}</span>
                 <span>
-                    {/* {progressValue} {renderUnitOfMeasurement(title)} */}
+                    {progressValue} {unitTypes}
                 </span>
             </ProgressInfoLine>
-            <BackgroundProgressBar ref={wrapperProgressBarRef}>
-                <ProgressBar style={{width: progressWidth + '%'}} ref={progressBarRef}>
+            <BackgroundProgressBar ref={progressRef}>
+                <ProgressBar style={{width: progressWidth + '%'}}>
                     <ProgressBarCircle 
                         onMouseDown={() => setIsMouseDown(true)}
                         onMouseUp={() => setIsMouseDown(false)}

@@ -58,12 +58,12 @@ const PriceContainer = styled.div`
     align-items: center;
 `;
 
-const PricePerMonth = styled.div<{price_value: boolean}>`
+const PricePerMonth = styled.div<{$priceValue: boolean}>`
     display: flex;
-    align-items: ${({price_value: price}) => price ? 'center' : 'flex-start'};
+    align-items: ${({$priceValue: price}) => price ? 'center' : 'flex-start'};
 `;
 
-const ExtraUsage = styled.div<{price_value: boolean}>`
+const ExtraUsage = styled.div<{$priceValue: boolean}>`
     margin-left: 3.5px;
     width: 83px;
     font-family: JetBrains Mono;
@@ -72,8 +72,8 @@ const ExtraUsage = styled.div<{price_value: boolean}>`
     line-height: 12px;
     letter-spacing: -0.34px;
     text-transform: uppercase;
-    align-self: ${({price_value: price}) => price ? 'center' : 'self-start'};
-    margin-top: ${({price_value: price}) => price ? 0 : '5px'};
+    align-self: ${({$priceValue: price}) => price ? 'center' : 'self-start'};
+    margin-top: ${({$priceValue: price}) => price ? 0 : '5px'};
 `;
 
 const WideStyledButton = styled.button`
@@ -186,9 +186,9 @@ const PriceCard: FC<IPrors> = ({title, info, price, options, border}) => {
             </CardHeader>
             <PriceContainer>
                 <div className="price_per_month_container">
-                    <PricePerMonth price_value={price > 0 ? true : false}>
+                    <PricePerMonth $priceValue={price > 0 ? true : false}>
                         <span className="price">{`$${price}`}</span>
-                        <ExtraUsage price_value={price > 0 ? true : false}>
+                        <ExtraUsage $priceValue={price > 0 ? true : false}>
                             /month<br/>
                             {price ? '+extra usage' : ''}
                         </ExtraUsage>

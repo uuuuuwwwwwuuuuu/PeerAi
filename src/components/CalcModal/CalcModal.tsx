@@ -102,9 +102,9 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
             <ModalMain>
                 <MainLeftElements>
                     <ProgressWrapper>
-                        <CalcModalProgress title="Monthly Active Users" />
-                        <CalcModalProgress title="Builds" />
-                        <CalcModalProgress title="Workflows CI/CD minutes" />
+                        <CalcModalProgress unitTypes="MAUs" title="Monthly Active Users" />
+                        <CalcModalProgress unitTypes="builds" title="Builds" />
+                        <CalcModalProgress unitTypes="mins" title="Workflows CI/CD minutes" />
                     </ProgressWrapper>
                 </MainLeftElements>
                 <MainRightElements>

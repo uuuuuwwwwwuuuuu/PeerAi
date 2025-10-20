@@ -1,8 +1,7 @@
-import { Dispatch, FC } from 'react';
 import styled from 'styled-components';
 import './Header.scss'
-import { Pages } from '../app/App';
 import useScreenSize from '../../detectScreenSize';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderComponent = styled.header`
     width: 100%;
@@ -23,7 +22,7 @@ const HeaderLine = styled.div`
     width: 100%;
 
 
-    a {
+    button {
         font-family: Inter;
         font-weight: 400;
         font-size: 2.4rem;
@@ -38,7 +37,7 @@ const HeaderLine = styled.div`
                 align-items: center;
                 gap: 10px;
 
-                a {
+                button {
                     font-size: 1.8rem;
                     padding: 3px;
                 }
@@ -47,14 +46,10 @@ const HeaderLine = styled.div`
     }
 `;
 
+const Header= () => {
+    const {width} = useScreenSize();
 
-
-interface IProps {
-    setPage: Dispatch<React.SetStateAction<Pages>>
-}
-
-const Header: FC<IProps> = ({setPage}) => {
-    const {width} = useScreenSize()
+    const navigate = useNavigate();
     
     const handleClickOnProfile = () => {
         if (width <= 470) {
@@ -66,17 +61,17 @@ const Header: FC<IProps> = ({setPage}) => {
         <HeaderComponent>
             <HeaderLine>
                 <nav>
-                    <img onClick={() => setPage('main')} src={`${process.env.PUBLIC_URL}/icons/peer_black.svg`} alt="peer icon" />
-                    <a href="#" target='_blank'>About</a>
-                    <a href="#" target='_blank'>Discord</a>
-                    <a href="#" target='_blank'>Github</a>
+                    <img onClick={() => navigate('/')} src={`${process.env.PUBLIC_URL}/icons/peer_black.svg`} alt="peer icon" />
+                    <button>About</button>
+                    <button>Discord</button>
+                    <button>Github</button>
                 </nav>
                 <div className='header_sign_in'>
                     <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} onClick={handleClickOnProfile} alt="person icon" />
                     <div>
-                        <button onClick={() => setPage('login')}>Sign in</button>
+                        <button onClick={() => navigate('/login')}>Sign in</button>
                         <span>/</span>
-                        <button onClick={() => setPage('signup')}>Sign up</button>
+                        <button onClick={() => navigate('/signup')}>Sign up</button>
                     </div>
                 </div>
             </HeaderLine>

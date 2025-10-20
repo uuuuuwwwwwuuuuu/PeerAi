@@ -7,44 +7,42 @@ import Blur from '../CalcModal/Blur';
 import { CSSProperties } from 'styled-components';
 import Footer from '../footer/Footer';
 import Login from '../LogIn/LogIn';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 export type Pages = 'main' | 'signup' | 'login';
 
 function App() {
-    const [isVisibleCalcModal, setIsVisibleCalcModal] = useState(false);
-    const [page, setPage] = useState<Pages>('main');
-    
-    useEffect(() => {
-        console.log(page)
-    }, [page])
-
-    const renderContent = (page: Pages) => {
-        switch (page) {
-            case 'main':
-                return (
-                    <>
-                        <Main setIsVisibleCalcModal={setIsVisibleCalcModal} />
-                        <Footer />
-                    </>
-            );
-            case 'login':
-                return <Login type='login' />
-            case 'signup':
-                return <Login type='signup' />
-        }
+    const location = useLocation()
+    const appStyles: CSSProperties = {
+        height: location.hash === '/login' || location.hash === '/signup' ? '100svh' : 'max-content',
     };
-
-    const appStyles: CSSProperties ={
-        overflowY: isVisibleCalcModal ? 'hidden' : 'auto',
-        height: page === 'main' ? 'max-content' : '100svh'
-    }
 
     return (
         <div className="App" style={appStyles}>
-            <Header setPage={setPage} />
-            {renderContent(page)}
-            {isVisibleCalcModal && <Blur />}
-            {isVisibleCalcModal && <CalcModal setIsVisibleCalcModal={setIsVisibleCalcModal} />}
+            <Header />
+
+            <Routes>
+                <Route
+                    index
+                    element={
+                        <>
+                            <Main />
+                            <Footer />
+                        </>
+                    }
+                />
+                <Route path="/login" element={<Login type="login" />} />
+                <Route path="/signin" element={<Login type="signup" />} />
+                <Route
+                    path="/calculator"
+                    element={
+                        <>
+                            <Blur />
+                            <CalcModal/>
+                        </>
+                    }
+                />
+            </Routes>
         </div>
     );
 }

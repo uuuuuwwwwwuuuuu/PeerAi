@@ -4,6 +4,7 @@ import MainCard from './MainCard/MainCard';
 import styled from 'styled-components';
 import PriceCard from './PriceCard/PriceCard';
 import useScreenSize from '../../detectScreenSize';
+import { Link } from 'react-router-dom';
 
 const Prices = styled.div`
     width: 100%;
@@ -183,9 +184,6 @@ const HeaderInfoWrapper = styled.div`
     }
 `;
 
-interface IProps {
-    setIsVisibleCalcModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const PriceSection: FC<{ withSlider?: boolean }> = ({ withSlider }) => {
     const data = [
@@ -345,7 +343,7 @@ const PriceSection: FC<{ withSlider?: boolean }> = ({ withSlider }) => {
     }
 };
 
-const Main: FC<IProps> = ({ setIsVisibleCalcModal }) => {
+const Main: FC = () => {
     const { width } = useScreenSize();
 
     return (
@@ -415,15 +413,17 @@ const Main: FC<IProps> = ({ setIsVisibleCalcModal }) => {
                     <h3>Grow confidently with predictable pricing</h3>
                     <CompareWrapper>
                         <span>COMPARE</span>
-                        <CompareButton onClick={() => setIsVisibleCalcModal(true)}>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/icons/calculator.svg`}
-                                alt="calculator icon"
-                            />
-                            <span>Calculator</span>
-                        </CompareButton>
+                        <Link to={'/calculator'}>
+                            <CompareButton>
+                                <img
+                                    src={`${process.env.PUBLIC_URL}/icons/calculator.svg`}
+                                    alt="calculator icon"
+                                />
+                                <span>Calculator</span>
+                            </CompareButton>
+                        </Link>
                     </CompareWrapper>
-                    {width >= 660 ? <PriceSection /> : <PriceSection withSlider />}
+                    {width >= 670 ? <PriceSection /> : <PriceSection withSlider />}
                     
                 </div>
             </Prices>

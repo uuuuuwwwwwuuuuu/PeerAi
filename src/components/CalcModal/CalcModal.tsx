@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import CalcModalProgress from "./CalcModalProgress";
 import PriceCard from "../main/PriceCard/PriceCard";
+import { useNavigate } from "react-router-dom";
 
 const ModalWindow = styled.div`
     position: fixed;
@@ -62,10 +63,6 @@ const HeaderLeftElements = styled.div`
         height: 100%;
     }
 `
-
-interface IProps {
-    setIsVisibleCalcModal: React.Dispatch<React.SetStateAction<boolean>>
-}
 
 const ModalMain = styled.div`
     padding: 16px 25px 25px 25px;
@@ -185,7 +182,7 @@ const renderPriceCard = (plan: Plans) => {
     }
 }
 
-const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
+const CalcModal = () => {
     const [MAUsValue, setMAUsValue] = useState(0);
     const [buildsValue, setBuildsValue] = useState(0);
     const [minsValue, setMinsValue] = useState(0);
@@ -195,18 +192,16 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
     useEffect(() => {
         if (MAUsValue > 50000 || buildsValue > 225 || minsValue > 1000) {
             setCurrentPlan('enterprise');
-            console.log('enterprise');
         } else if (MAUsValue > 3000 || buildsValue > 45 || minsValue > 350) {
             setCurrentPlan('production');
-            console.log('prod');
         } else if (MAUsValue > 1000 || buildsValue > 30 || minsValue > 60) {
             setCurrentPlan('starter');
-            console.log('starter');
         } else {
             setCurrentPlan('free');
-            console.log('free');
         }
     }, [MAUsValue, buildsValue, minsValue])
+
+    const navigate = useNavigate();
 
     return (
         <ModalWindow>
@@ -215,7 +210,7 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
                     <img src={`${process.env.PUBLIC_URL}/icons/calculator.svg`} alt="calculator icon" />
                     <span>Usage plan calculator</span>
                 </HeaderLeftElements>
-                <button onClick={() => setIsVisibleCalcModal(false)}>
+                <button onClick={() => navigate(-1)}>
                     <img src={`${process.env.PUBLIC_URL}/icons/cross.svg`} alt="cross" />
                 </button>
             </ModalHeader>

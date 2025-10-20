@@ -4,13 +4,13 @@ import './index.scss';
 import App from './components/app/App';
 import { ThemeProvider } from 'styled-components';
 import Theme from './colorConstants';
-import { HashRouter, Router } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <HashRouter>
-        <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={Theme}>
+        <HashRouter>
             <App />
-        </ThemeProvider>
-    </HashRouter>
+        </HashRouter>
+    </ThemeProvider>
 );

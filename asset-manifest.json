@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/PeerAi/static/css/main.96fb56bc.css",
+    "main.js": "/PeerAi/static/js/main.610d2160.js",
+    "index.html": "/PeerAi/index.html",
+    "main.96fb56bc.css.map": "/PeerAi/static/css/main.96fb56bc.css.map",
+    "main.610d2160.js.map": "/PeerAi/static/js/main.610d2160.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.96fb56bc.css",
+    "static/js/main.610d2160.js"
+  ]
+}

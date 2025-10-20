@@ -2,6 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 import { PeerCircle } from "../main/Main";
 import { WideStyledButton } from "../main/PriceCard/PriceCard";
+import { Link } from "react-router-dom";
 
 const SignUpWrapper = styled.div`
     width: 100%;
@@ -201,7 +202,7 @@ const Form: FC<{type: 'login' | 'signup'}> = ({type}) => {
             </SignUpWithSocial>
             <ToggleDiv>
                 <span>Don't have an account? </span>
-                <a href="#">{type === 'signup' ? 'Log in' : 'Sign up'}</a>
+                <Link to={type === 'signup' ? '/login' : '/signup'}>{type === 'signup' ? 'Log in' : 'Sign up'}</Link>
             </ToggleDiv>
         </StyledForm>
     )

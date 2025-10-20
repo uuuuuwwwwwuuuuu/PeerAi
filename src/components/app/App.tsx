@@ -32,7 +32,7 @@ function App() {
                     }
                 />
                 <Route path="/login" element={<Login type="login" />} />
-                <Route path="/signin" element={<Login type="signup" />} />
+                <Route path="/signup" element={<Login type="signup" />} />
                 <Route
                     path="/calculator"
                     element={

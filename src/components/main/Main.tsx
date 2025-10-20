@@ -13,6 +13,47 @@ const Prices = styled.div`
     background-color: ${({theme}) => theme.bgSecond};
 `;
 
+
+const HeaderInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    max-width: max-content;
+    width: 100%;
+    max-width: 904px;
+
+    h1 {
+        font-size: 5.6rem;
+        margin: 0;
+        span {
+            color: $accent;
+        }
+    }
+
+    p {
+        font-family: Figtree;
+        font-weight: 500;
+        font-size: 2.4rem;
+        text-align: center;
+        color: ${({theme}) => theme.textSecond};
+    }
+`;
+
+export const PeerCircle = styled.div<{$size: 'big' | 'small'}>`
+    width: ${({$size}) => $size === 'big' ? '100px' : '75px'};
+    height: ${({$size}) => $size === 'big' ? '100px' : '75px'};
+    border: 1px solid ${({theme}) => theme.accent};
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+        height: 50px;
+    }
+`;
+
 const CompareWrapper = styled.div`
     display: flex;
     gap: 15px;
@@ -52,6 +93,27 @@ const CompareButton = styled.button`
     }
 `;
 
+export const StyledButton = styled.button<{$fill: boolean}>`
+    height: 50px;
+    width: 190px;
+    background-color: ${({theme, $fill}) => $fill ? theme.accent : theme.bgMain};
+    font-family: 'Figtree';
+    font-weight: 600;
+    font-size: 2rem;
+    border-radius: 100px;
+    color: ${({theme, $fill}) => $fill ? theme.bgMain : theme.accent};
+    border: ${({theme, $fill}) => $fill ? '' : '1px solid ' + theme.accent};
+`;
+
+const HeaderInfoWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 744px;
+    border-bottom: 1px solid ${({theme}) => theme.bgSecond};
+`;
+
 interface IProps {
     setIsVisibleCalcModal: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -59,7 +121,26 @@ interface IProps {
 const Main: FC<IProps> = ({setIsVisibleCalcModal}) => {
     return (
         <main>
-            
+            <HeaderInfoWrapper>
+                <HeaderInfo>
+                    <div className='peer_wrapper'>
+                        <PeerCircle $size='big'>
+                            <img src={`${process.env.PUBLIC_URL}/icons/peer_accent.svg`} alt="peer accent color" />
+                        </PeerCircle>
+                        <span>Peer AI</span>
+                    </div>
+                    <h1>
+                        The Open Source <span>AI-Powered</span> Code Editor
+                    </h1>
+                    <p>
+                        Speed up your development process by seamlessly  integrating AI into your workflow. Afraid of switching editors? No need, Pear is a fork of VSCode and retains all its features, you’ll feel right at home
+                    </p>
+                    <div className='header_buttons_wrapper'>
+                        <StyledButton $fill={false}>More Details</StyledButton>
+                        <StyledButton $fill={true}>Join Waitlist</StyledButton>
+                    </div>
+                </HeaderInfo>
+            </HeaderInfoWrapper>
             <section className="main_container">
                 <MainCard 
                     title='No more switching between files.'

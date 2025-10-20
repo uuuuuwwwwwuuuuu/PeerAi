@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './App.scss';
 import Header from '../header/Header';
 import Main from '../main/Main';
 import CalcModal from '../CalcModal/CalcModal';
 import Blur from '../CalcModal/Blur';
-import LogIn from '../LogIn/LogIn';
-import SignUp from '../SignUp/SignUp';
+import Login from '../Login/Login';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { CSSProperties } from 'styled-components';
 
 export type Pages = 'main' | 'signup' | 'login';
 
 function App() {
     const [isVisibleCalcModal, setIsVisibleCalcModal] = useState(false);
-    const [page, setPage] = useState<Pages>('main');
+    const [page, setPage] = useState<Pages>('signup');
     
     useEffect(() => {
         console.log(page)
@@ -22,14 +23,19 @@ function App() {
             case 'main':
                 return <Main setIsVisibleCalcModal={setIsVisibleCalcModal} />;
             case 'login':
-                return <LogIn />
+                return <Login type='login' />
             case 'signup':
-                return <SignUp />
+                return <Login type='signup' />
         }
     };
 
+    const appStyles: CSSProperties ={
+        overflowY: isVisibleCalcModal ? 'hidden' : 'auto',
+        height: page === 'main' ? 'max-content' : '100svh'
+    }
+
     return (
-        <div className="App" style={{ overflowY: isVisibleCalcModal ? 'hidden' : 'auto' }}>
+        <div className="App" style={appStyles}>
             <Header setPage={setPage} />
             {renderContent(page)}
             {isVisibleCalcModal && <Blur />}

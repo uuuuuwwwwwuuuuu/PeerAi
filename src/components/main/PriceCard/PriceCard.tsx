@@ -77,7 +77,7 @@ const ExtraUsage = styled.div<{$priceValue: boolean}>`
     margin-top: ${({$priceValue: price}) => price ? 0 : '5px'};
 `;
 
-const WideStyledButton = styled.button`
+export const WideStyledButton = styled.button`
     width: 100%;
     height: 36px;
     font-weight: 500;

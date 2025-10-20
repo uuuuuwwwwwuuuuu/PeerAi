@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useRef, useState } from "react";
+import { FC, MouseEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const ProgressWrapper = styled.div`
@@ -79,45 +79,72 @@ const convertWidthToPercents = (wrapperWidth: number, currentWidth: number) => {
 
 
 const CalcModalProgress: FC<{title: string}> = ({title}) => {
+    const [isMouseDown, setIsMouseDown] = useState(false);
+    const [progressWidth, setProgressWidth] = useState(0);
+
     const progressBarRef = useRef<HTMLDivElement>(null);
     const wrapperProgressBarRef = useRef<HTMLDivElement>(null);
 
-    const [progressValue, setProgressValue] = useState(0);
-    const [currentWidthValue, setCurrentWidthValue] = useState(0);
-    
-    const onChangeProgress = (event: MouseEvent<HTMLDivElement>) => {
-        const currentMouseOffset = event.nativeEvent.offsetX;
+    const slide = (event: MouseEvent<HTMLDivElement>) => {
+        if (isMouseDown && progressBarRef.current) {
+            const progressWidth = progressBarRef.current.clientWidth;
+            const offsetX = event.nativeEvent.offsetX;
 
-        if (progressBarRef.current && wrapperProgressBarRef.current) {
-            const wrapperProgressWidth = wrapperProgressBarRef.current.clientWidth;
-            const progressWidth = convertWidthToPercents(wrapperProgressBarRef.current.clientWidth, currentMouseOffset);
-            setCurrentWidthValue(convertWidthToPercents(wrapperProgressBarRef.current.clientWidth, currentMouseOffset));
-
-            const currentPercentValue = convertWidthToPercents(wrapperProgressWidth, progressWidth);
-            
-
-            if (title == 'Monthly Active Users') {
-                setProgressValue(Math.floor(currentPercentValue * 1000000 / 100));
-            } else if (title == 'Builds') {
-                setProgressValue(Math.floor(currentPercentValue * 1000 / 100));
-            } else {
-                setProgressValue(Math.floor(currentPercentValue * 1500 / 100));
-            }
-
+            setProgressWidth(prevState => {
+                const newState = prevState + convertWidthToPercents(offsetX - 15, progressWidth);
+                if (newState === 0) {
+                    return 0;
+                } else if (newState >= 100) {
+                    return 100;
+                } else {
+                    return newState;
+                }
+            });
         }
-    }
+    };
+
+    const touchSlide = (event: React.TouchEvent<HTMLDivElement>) => {
+        if (isMouseDown && progressBarRef.current) {
+            const progressRect = progressBarRef.current.getBoundingClientRect();
+            const touch = event.touches[0];
+            const touchX = touch.clientX - progressRect.left;
+
+            const newProgress = convertWidthToPercents(touchX, progressRect.width);
+            
+            setProgressWidth(() => {
+                if (newProgress <= 0) {
+                    return 0;
+                } else if (newProgress >= 100) {
+                    return 100;
+                } else {
+                    return newProgress;
+                }
+            });
+        }
+    };
 
     return (
         <ProgressWrapper>
             <ProgressInfoLine>
                 <span>{title}</span>
                 <span>
-                    {progressValue} {renderUnitOfMeasurement(title)}
+                    {/* {progressValue} {renderUnitOfMeasurement(title)} */}
                 </span>
             </ProgressInfoLine>
-            <BackgroundProgressBar onClick={onChangeProgress} ref={wrapperProgressBarRef}>
-                <ProgressBar style={{width: currentWidthValue + '%'}} ref={progressBarRef}>
-                    <ProgressBarCircle />
+            <BackgroundProgressBar ref={wrapperProgressBarRef}>
+                <ProgressBar style={{width: progressWidth + '%'}} ref={progressBarRef}>
+                    <ProgressBarCircle 
+                        onMouseDown={() => setIsMouseDown(true)}
+                        onMouseUp={() => setIsMouseDown(false)}
+                        onMouseLeave={() => setIsMouseDown(false)}
+
+                        onTouchStart={() => setIsMouseDown(true)}
+                        onTouchEnd={() => setIsMouseDown(false)}
+
+
+                        onMouseMove={slide}
+                        onTouchMove={touchSlide}
+                    />
                 </ProgressBar>
             </BackgroundProgressBar>
         </ProgressWrapper>

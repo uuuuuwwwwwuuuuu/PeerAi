@@ -1,4 +1,4 @@
-import { FC, MouseEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { Dispatch, FC, MouseEvent, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const ProgressWrapper = styled.div`
@@ -63,12 +63,6 @@ const ProgressBarCircle = styled.div`
     }
 `;
 
-type unitTypes = 'MAUs' | 'builds' | 'mins';
-
-interface IProps {
-    title: string;
-    unitTypes: unitTypes
-}
 
 const convertWidthToPercents = (currentWidth: number, wrapperWidth: number) => {
     return +((currentWidth * 100) / wrapperWidth).toFixed(4);
@@ -88,12 +82,20 @@ const convertPercentsToValue = (unit: unitTypes, currentPercents: number) => {
     const t = currentPercents / 100;
     const exponentialProgress = Math.pow(t, 3);
     
-    const value = exponentialProgress * maxValue;
+    const value = Math.floor(exponentialProgress * maxValue);
 
-    return Math.floor(value);
+    return value;
 };
 
-const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
+export type unitTypes = 'MAUs' | 'builds' | 'mins';
+
+interface IProps {
+    title: string;
+    unitType: unitTypes;
+    setProgresDataValue: Dispatch<SetStateAction<number>>;
+}
+
+const CalcModalProgress: FC<IProps> = ({title, unitType, setProgresDataValue}) => {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [progressWidth, setProgressWidth] = useState(0);
     const [progressValue, setProgressValue] = useState(0);
@@ -118,7 +120,9 @@ const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
                 }
             });
 
-            setProgressValue(convertPercentsToValue(unitTypes, newProgress));
+            
+            setProgressValue(convertPercentsToValue(unitType, newProgress));
+            setProgresDataValue(progressValue);
         }
     };
 
@@ -140,7 +144,8 @@ const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
                 }
             });
 
-            setProgressValue(convertPercentsToValue(unitTypes, progressWidth));
+            setProgressValue(convertPercentsToValue(unitType, progressWidth));
+            setProgresDataValue(progressValue);
         }
     };
 
@@ -149,7 +154,7 @@ const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
             <ProgressInfoLine>
                 <span>{title}</span>
                 <span>
-                    {progressValue} {unitTypes}
+                    {progressValue} {unitType}
                 </span>
             </ProgressInfoLine>
             <BackgroundProgressBar ref={progressRef}>

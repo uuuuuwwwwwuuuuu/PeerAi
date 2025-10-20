@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import CalcModalProgress from "./CalcModalProgress";
+import CalcModalProgress, { unitTypes } from "./CalcModalProgress";
 
 const ModalWindow = styled.div`
     position: fixed;
@@ -88,6 +88,17 @@ const MainRightElements = styled.section`
 `
 
 const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
+    const [MAUsValue, setMAUsValue] = useState(0);
+    const [buildsValue, setBuildsValue] = useState(0);
+    const [minsValue, setMinsValue] = useState(0);
+
+    const [currentPlan, setCurrentPlan] = useState<'free' | 'starter' | 'production' | 'enterprise'>('free');
+
+    useEffect(() => {
+        
+    }, [MAUsValue, buildsValue, minsValue])
+
+
     return (
         <ModalWindow>
             <ModalHeader>
@@ -102,13 +113,25 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
             <ModalMain>
                 <MainLeftElements>
                     <ProgressWrapper>
-                        <CalcModalProgress unitTypes="MAUs" title="Monthly Active Users" />
-                        <CalcModalProgress unitTypes="builds" title="Builds" />
-                        <CalcModalProgress unitTypes="mins" title="Workflows CI/CD minutes" />
+                        <CalcModalProgress 
+                            unitType="MAUs"
+                            title="Monthly Active Users"
+                            setProgresDataValue={setMAUsValue}   
+                        />
+                        <CalcModalProgress 
+                            unitType="builds"
+                            title="Builds"
+                            setProgresDataValue={setBuildsValue}    
+                        />
+                        <CalcModalProgress 
+                            unitType="mins"
+                            title="Workflows CI/CD minutes"
+                            setProgresDataValue={setMinsValue}  
+                        />
                     </ProgressWrapper>
                 </MainLeftElements>
                 <MainRightElements>
-                    
+
                 </MainRightElements>
             </ModalMain>
         </ModalWindow>

@@ -75,16 +75,20 @@ const convertWidthToPercents = (currentWidth: number, wrapperWidth: number) => {
 };
 
 const convertPercentsToValue = (unit: unitTypes, currentPercents: number) => {
-    let value: number;
-    // const exponentialFactor = Math.pow(10, currentPercents / 100);
-
+    let maxValue: number;
+    
     if (unit === 'MAUs') {
-        value = currentPercents * 1000000 / 100;
+        maxValue = 1000000;
     } else if (unit === 'builds') {
-        value = currentPercents * 1000 / 100;
+        maxValue = 1000;
     } else {
-        value = currentPercents * 1500 / 100;
+        maxValue = 1500;
     }
+    
+    const t = currentPercents / 100;
+    const exponentialProgress = Math.pow(t, 3);
+    
+    const value = exponentialProgress * maxValue;
 
     return Math.floor(value);
 };

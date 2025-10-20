@@ -76,7 +76,7 @@ const convertPercentsToValue = (unit: unitTypes, currentPercents: number) => {
     } else if (unit === 'builds') {
         maxValue = 1000;
     } else {
-        maxValue = 1500;
+        maxValue = 3000;
     }
     
     const t = currentPercents / 100;

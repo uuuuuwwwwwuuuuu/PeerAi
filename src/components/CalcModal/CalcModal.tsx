@@ -85,7 +85,7 @@ const StyledP = styled.p`
 const MainRightElements = styled.section`
     max-width: 447px;
     width: 100%;
-`
+`;
 
 const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
     const [MAUsValue, setMAUsValue] = useState(0);
@@ -95,9 +95,20 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
     const [currentPlan, setCurrentPlan] = useState<'free' | 'starter' | 'production' | 'enterprise'>('free');
 
     useEffect(() => {
-        
+        if (MAUsValue > 50000 || buildsValue > 225 || minsValue > 1000) {
+            setCurrentPlan('enterprise');
+            console.log('enterprise');
+        } else if (MAUsValue > 3000 || buildsValue > 45 || minsValue > 350) {
+            setCurrentPlan('production');
+            console.log('prod');
+        } else if (MAUsValue > 1000 || buildsValue > 30 || minsValue > 60) {
+            setCurrentPlan('starter');
+            console.log('starter');
+        } else {
+            setCurrentPlan('free');
+            console.log('free');
+        }
     }, [MAUsValue, buildsValue, minsValue])
-
 
     return (
         <ModalWindow>

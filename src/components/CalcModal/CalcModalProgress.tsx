@@ -76,6 +76,8 @@ const convertWidthToPercents = (currentWidth: number, wrapperWidth: number) => {
 
 const convertPercentsToValue = (unit: unitTypes, currentPercents: number) => {
     let value: number;
+    // const exponentialFactor = Math.pow(10, currentPercents / 100);
+
     if (unit === 'MAUs') {
         value = currentPercents * 1000000 / 100;
     } else if (unit === 'builds') {
@@ -95,24 +97,24 @@ const CalcModalProgress: FC<IProps> = ({title, unitTypes}) => {
     const progressRef = useRef<HTMLDivElement | null>(null);
 
     
-
     const slide = (event: MouseEvent<HTMLDivElement>) => {
         if (isMouseDown && progressRef.current) {
-            const progressWidth = progressRef.current.clientWidth;
-            const offsetX = event.nativeEvent.offsetX;
+            const progressRect = progressRef.current.getBoundingClientRect();
+            const mouseX = event.clientX - progressRect.left;
 
-            setProgressWidth(prevState => {
-                const newState = prevState + convertWidthToPercents(offsetX - 15, progressWidth);
-                if (newState === 0) {
+            const newProgress = convertWidthToPercents(mouseX, progressRect.width);
+            
+            setProgressWidth(() => {
+                if (newProgress <= 0) {
                     return 0;
-                } else if (newState >= 100) {
+                } else if (newProgress >= 100) {
                     return 100;
                 } else {
-                    return newState;
+                    return newProgress;
                 }
             });
 
-            setProgressValue(convertPercentsToValue(unitTypes, progressWidth));
+            setProgressValue(convertPercentsToValue(unitTypes, newProgress));
         }
     };
 

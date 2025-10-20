@@ -18,7 +18,7 @@ const ModalWindow = styled.div`
 
 const ModalHeader = styled.div`
     width: 100%;
-    height: 69px;
+    height: 70px;
     border-bottom: 1px solid #EEEEEE;
     background-color: ${({theme}) => theme.bgSecond};
     border-radius: 10px 10px 0 0;
@@ -57,7 +57,7 @@ interface IProps {
 
 const ModalMain = styled.div`
     padding: 16px 25px 25px 25px;
-    height: 100%;
+    height: calc(100% - 70px);
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -82,7 +82,7 @@ const StyledP = styled.p`
     text-align: start;
 `
 
-const MainRightElements = styled.div`
+const MainRightElements = styled.section`
     max-width: 447px;
     width: 100%;
 `
@@ -108,7 +108,7 @@ const CalcModal: FC<IProps> = ({setIsVisibleCalcModal}) => {
                     </ProgressWrapper>
                 </MainLeftElements>
                 <MainRightElements>
-
+                    
                 </MainRightElements>
             </ModalMain>
         </ModalWindow>

@@ -2,7 +2,7 @@ import { FC } from "react";
 import './PriceCard.scss';
 import styled from "styled-components";
 
-const PriceArticle = styled.article<{border: 'left' | 'right' | 'none'}>`
+const PriceArticle = styled.article<{$border: 'left' | 'right' | 'none', $size: 'big' | 'small'}>`
     padding: 21px 25px 25px 25px;
     border: 1px solid ${({theme}) => theme.accent};
     flex: 0 0 300px;
@@ -10,11 +10,11 @@ const PriceArticle = styled.article<{border: 'left' | 'right' | 'none'}>`
     flex-direction: column;
     align-items: flex-start;
     text-align: start;
-    height: 640px;
-    border-radius: ${({border}) => {
-        if (border == 'left') {
+    height: ${({$size}) => $size == 'big' ? 640 : 489};
+    border-radius: ${({$border}) => {
+        if ($border == 'left') {
             return '16px 0 0 16px'
-        } else if (border == 'right') {
+        } else if ($border == 'right') {
             return '0 16px 16px 0';
         } else {
             return 0
@@ -179,7 +179,7 @@ const LiElement: FC<{text: string}> = ({text}) => {
 
 const PriceCard: FC<IPrors> = ({title, info, price, options, border}) => {
     return (
-        <PriceArticle border={border}>
+        <PriceArticle $size="big" $border={border}>
             <CardHeader>
                 <h2>{title}</h2>
                 <p>{info}</p>

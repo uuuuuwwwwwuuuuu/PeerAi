@@ -1,13 +1,12 @@
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
 import Header from '../header/Header';
 import Main from '../main/Main';
 import CalcModal from '../CalcModal/CalcModal';
 import Blur from '../CalcModal/Blur';
-import Login from '../Login/Login';
-import { Outlet, Route, Routes } from 'react-router-dom';
 import { CSSProperties } from 'styled-components';
 import Footer from '../footer/Footer';
+import Login from '../LogIn/LogIn';
 
 export type Pages = 'main' | 'signup' | 'login';
 

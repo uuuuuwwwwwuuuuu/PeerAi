@@ -35,7 +35,7 @@ const HeaderInfo = styled.div`
         font-size: 5.6rem;
         margin: 0;
         span {
-            color: ${({theme}) => theme.accent};
+            color: ${({ theme }) => theme.accent};
         }
     }
 
@@ -93,7 +93,7 @@ export const PeerCircle = styled.div<{ $size: 'big' | 'small' }>`
             height: 75px;
 
             img {
-                height: 35px
+                height: 35px;
             }
         }
     }

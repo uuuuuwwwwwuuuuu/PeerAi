@@ -134,8 +134,6 @@ const StyledLi = styled.li`
         font-family: Inter;
         font-weight: 400;
         font-size: 1.4rem;
-        line-height: 21.98px;
-        white-space: pre;
     }
 `;
 
@@ -157,6 +155,7 @@ const ViewFeatures = styled.div`
 const OptionsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    max-width: 250px;
 `
 
 const renderIcon = (text: string) => {
@@ -210,7 +209,7 @@ const PriceCard: FC<IPrors> = ({title, info, price, options, border, size}) => {
                             !price && <StyledLi>
                                 {renderIcon('')}
                                 <div>
-                                    <span>Access to </span>
+                                    <span style={{whiteSpace: 'pre'}}>Access to </span>
                                     <a href="#" target="_blank">
                                         Launch
                                         <img src={`${process.env.PUBLIC_URL}/icons/arrow.svg`} alt="arrow" />

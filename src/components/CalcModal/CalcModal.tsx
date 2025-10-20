@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import CalcModalProgress, { unitTypes } from "./CalcModalProgress";
+import CalcModalProgress from "./CalcModalProgress";
 import PriceCard from "../main/PriceCard/PriceCard";
 
 const ModalWindow = styled.div`
@@ -15,6 +15,17 @@ const ModalWindow = styled.div`
     margin-top: -300px;
     margin-left: -512px;
     z-index: 5;
+    
+
+    @media screen and (max-width: 1120px) {
+        & {
+            max-width: 800px;
+            margin-left: -400px;
+            section {
+                width: 350px;
+            }
+        }
+    }
 `;
 
 const ModalHeader = styled.div`
@@ -62,13 +73,21 @@ const ModalMain = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 1120px) {
+        gap: 30px
+    }
 `;
 
 const MainLeftElements = styled.div`
-    max-width: 447px;
     width: 100%;
     height: 100%;
+    flex: 0 1 447px;
 
+    @media screen and (max-width: 1120px) {
+        flex-basis: 300px;
+        flex-grow: 1;
+    }
 `;
 
 const ProgressWrapper = styled.div`
@@ -86,6 +105,11 @@ const StyledP = styled.p`
 const MainRightElements = styled.section`
     max-width: 447px;
     width: 100%;
+
+    article {
+        border-radius: 16px;
+        border-color: #E0E1E6;
+    }
 `;
 
 type Plans = 'free' | 'starter' | 'production' | 'enterprise'

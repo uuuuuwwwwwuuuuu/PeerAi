@@ -8,3 +8,12 @@
     align-items: center;
     text-align: start;
 }
+
+@media screen and (max-width: 1000px) {
+    .main_card_article {
+        flex-direction: column;
+
+        height: max-content;
+        gap: 20px;
+    }
+}

@@ -15,17 +15,20 @@ nav {
     width: 100%;
     display: flex;
     gap: 16px;
+    display: flex;
+    align-items: center;
 
     span {
         font-size: 2.4rem;
         font-weight: 400;
         line-height: 100%;
-
     }
 
     div {
         display: flex;
+        align-items: center;
         padding: 0 16px;
+        align-items: center;
 
         span {
             margin: 0 5px;
@@ -51,4 +54,30 @@ nav {
 .header_buttons_wrapper {
     display: flex;
     gap: 24px;
+}
+
+@media screen and (max-width: 770px) {
+    .header_sign_in {
+        gap: 10px;
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+
+        div {
+            padding: 0;
+            span, button {
+                font-size: 1.8rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .header_sign_in {
+        div {
+            display: none;
+        }
+    }
 }

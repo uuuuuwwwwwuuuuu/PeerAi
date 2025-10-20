@@ -14,8 +14,7 @@ const LeftMainCardElements = styled.div`
     flex-direction: column;
     gap: 24px;
     align-items: flex-start;
-    max-width: 433px;
-    width: 100%;
+    flex: 0 1 430px;
 
     h2 {
         font-family: Inter;
@@ -35,17 +34,44 @@ const LeftMainCardElements = styled.div`
         letter-spacing: -3%;
         color: ${({theme}) => theme.text};
     }
+
+    @media screen and (max-width: 1000px) {
+        & {
+            gap: 14px;
+            align-items: center;
+            flex-basis: 200px;
+
+            h2 {
+                text-align: center;
+            }
+
+            p {
+                text-align: center
+            }
+
+            max-width: 600px;
+        }
+    }
 `;
 
 const RightMainCardElements = styled.div`
-    max-width: 800px;
-    width: 100%;
+    flex: 0 1 800px;
     height: 100%;
+    margin-left: 20px;
 
     img {
         width: 100%;
         height: 100%;
         border-radius: 16px;
+        object-fit: cover;
+    }
+
+    @media screen and (max-width: 1000px) {
+        & {
+            width: 100%;
+            flex-basis: 350px;
+            margin: 0;
+        }    
     }
 `;
 

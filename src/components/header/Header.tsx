@@ -2,6 +2,7 @@ import { Dispatch, FC } from 'react';
 import styled from 'styled-components';
 import './Header.scss'
 import { Pages } from '../app/App';
+import useScreenSize from '../../detectScreenSize';
 
 const HeaderComponent = styled.header`
     width: 100%;
@@ -29,6 +30,21 @@ const HeaderLine = styled.div`
         line-height: 100%;
         text-align: center;
     }
+
+    @media screen and (max-width: 770px) {
+        & {
+            nav {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                a {
+                    font-size: 1.8rem;
+                    padding: 3px;
+                }
+            }
+        }
+    }
 `;
 
 
@@ -38,7 +54,14 @@ interface IProps {
 }
 
 const Header: FC<IProps> = ({setPage}) => {
+    const {width} = useScreenSize()
     
+    const handleClickOnProfile = () => {
+        if (width <= 470) {
+            
+        }
+    }
+
     return (
         <HeaderComponent>
             <HeaderLine>
@@ -49,7 +72,7 @@ const Header: FC<IProps> = ({setPage}) => {
                     <a href="#" target='_blank'>Github</a>
                 </nav>
                 <div className='header_sign_in'>
-                    <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} alt="person icon" />
+                    <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} onClick={handleClickOnProfile} alt="person icon" />
                     <div>
                         <button onClick={() => setPage('login')}>Sign in</button>
                         <span>/</span>

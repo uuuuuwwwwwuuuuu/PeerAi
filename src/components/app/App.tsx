@@ -12,7 +12,7 @@ export type Pages = 'main' | 'signup' | 'login';
 
 function App() {
     const [isVisibleCalcModal, setIsVisibleCalcModal] = useState(false);
-    const [page, setPage] = useState<Pages>('signup');
+    const [page, setPage] = useState<Pages>('main');
     
     useEffect(() => {
         console.log(page)

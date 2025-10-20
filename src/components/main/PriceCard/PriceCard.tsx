@@ -47,7 +47,7 @@ interface IPrors {
     title: string;
     info: string;
     price: number;
-    options: string[];
+    options: readonly string[];
     border: 'left' | 'right' | 'none';
     size: 'big' | 'small'
 }

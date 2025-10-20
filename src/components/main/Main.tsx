@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useRef, useState } from 'react';
 import './Main.scss';
 import MainCard from './MainCard/MainCard';
 import styled from 'styled-components';
 import PriceCard from './PriceCard/PriceCard';
+import useScreenSize from '../../detectScreenSize';
 
 const Prices = styled.div`
     width: 100%;
@@ -186,7 +187,167 @@ interface IProps {
     setIsVisibleCalcModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const PriceSection: FC<{ withSlider?: boolean }> = ({ withSlider }) => {
+    const data = [
+        {
+            title: 'Free',
+            info: 'For solo developers working on a passion project.',
+            price: 0,
+            options: [
+                '15 Android and 15 iOS builds',
+                'Low-priority queue',
+                '60 min. on CI/CD Workflows',
+                'Submit to app stores',
+                'Send updates to 1K MAUs',
+            ],
+            border: 'left',
+            size: 'big',
+        },
+        {
+            title: 'Starter',
+            info: 'For developers ready to launch real-world apps.',
+            price: 19,
+            options: [
+                '145 of builds',
+                'High-priority queue',
+                'Access to large workers',
+                'Send updates to 3K MAUs',
+            ],
+            border: 'none',
+            size: 'big',
+        },
+        {
+            title: 'Production',
+            info: 'For teams building and distributing production apps.',
+            price: 199,
+            options: [
+                '225 builds',
+                '2 included concurrencies',
+                'Send updates to 50K MAUs',
+                'Priority support',
+                'Single sign-on (SSO)',
+            ],
+            border: 'none',
+            size: 'big',
+        },
+        {
+            title: 'Enterprise',
+            info: 'For apps with scale, security, and compliance needs.',
+            price: 1999,
+            options: [
+                '1,000 of builds',
+                '5 included concurrencies',
+                'Send updates to 1M MAUs',
+                'Slack and strategic support add-on available',
+            ],
+            border: 'right',
+            size: 'big',
+        },
+    ] as const;
+
+    const [isTouch, setIsTouch] = useState(false);
+    const [translateValue, setTranslateValue] = useState(0);
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+    const [startX, setStartX] = useState(0);
+    const [diffX, setDiffX] = useState(0);
+
+    const sliderWindowRef = useRef<HTMLDivElement | null>(null);
+
+    const touchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+        setIsTouch(true);
+        setStartX(event.touches[0].clientX);
+    };
+
+    const touchSlide = (event: React.TouchEvent<HTMLDivElement>) => {
+        if (isTouch) {
+            const touch = event.touches[0];
+            const diffX = touch.clientX - startX;
+
+            setDiffX(diffX);
+            setTranslateValue(currentSlideIndex * 350 - diffX);
+        }
+    };
+
+    const touchEnd = () => {
+        setIsTouch(false);
+        if (diffX <= -150) {
+            setCurrentSlideIndex(prevState => {
+                if (prevState >= data.length - 1) {
+                    setTranslateValue(prevState * 350);
+                    return prevState;
+                }
+                const newValue = prevState + 1;
+                setTranslateValue(newValue * 350);
+                return newValue;
+            });
+        } else if (diffX >= 150) {
+            setCurrentSlideIndex(prevState => {
+                if (prevState <= 0) {
+                    setTranslateValue(prevState * 350);
+                    return prevState;
+                }
+                const newValue = prevState - 1;
+                setTranslateValue(newValue * 350);
+                return newValue;
+            });
+        } else {
+            setTranslateValue(currentSlideIndex * 350);
+        }
+    };
+
+    if (withSlider) {
+        return (
+            <div className="price_slider">
+                <div className="price_slider_window" ref={sliderWindowRef}>
+                    <section
+                        className="price_cards_wrapper"
+                        onTouchStart={touchStart}
+                        onTouchEnd={touchEnd}
+                        onTouchMove={touchSlide}
+                        style={{ transform: `translateX(${-translateValue}px)` }}
+                    >
+                        {data.map((priceCardData, index) => {
+                            return (
+                                <PriceCard
+                                    title={priceCardData.title}
+                                    info={priceCardData.info}
+                                    price={priceCardData.price}
+                                    options={priceCardData.options}
+                                    border={priceCardData.border}
+                                    size={priceCardData.size}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </section>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <section className="price_cards_wrapper">
+                {data.map((priceCardData, index) => {
+                    return (
+                        <PriceCard
+                            title={priceCardData.title}
+                            info={priceCardData.info}
+                            price={priceCardData.price}
+                            options={priceCardData.options}
+                            border={priceCardData.border}
+                            size={priceCardData.size}
+                            key={index}
+                        />
+                    );
+                })}
+            </section>
+        );
+    }
+};
+
 const Main: FC<IProps> = ({ setIsVisibleCalcModal }) => {
+    const { width } = useScreenSize();
+
     return (
         <main>
             <HeaderInfoWrapper>
@@ -262,62 +423,8 @@ const Main: FC<IProps> = ({ setIsVisibleCalcModal }) => {
                             <span>Calculator</span>
                         </CompareButton>
                     </CompareWrapper>
-                    <section className="price_cards_wrapper">
-                        <PriceCard
-                            title="Free"
-                            info="For solo developers working on a passion project."
-                            price={0}
-                            options={[
-                                '15 Android and 15 iOS builds',
-                                'Low-priority queue',
-                                '60 min. on CI/CD Workflows',
-                                'Submit to app stores',
-                                'Send updates to 1K MAUs',
-                            ]}
-                            border="left"
-                            size="big"
-                        />
-                        <PriceCard
-                            title="Starter"
-                            info="For developers ready to launch real-world apps."
-                            price={19}
-                            options={[
-                                '145 of builds',
-                                'High-priority queue',
-                                'Access to large workers',
-                                'Send updates to 3K MAUs',
-                            ]}
-                            border="none"
-                            size="big"
-                        />
-                        <PriceCard
-                            title="Production"
-                            info="For teams building and distributing production apps."
-                            price={199}
-                            options={[
-                                '225 builds',
-                                '2 included concurrencies',
-                                'Send updates to 50K MAUs',
-                                'Priority support',
-                                'Single sign-on (SSO)',
-                            ]}
-                            border="none"
-                            size="big"
-                        />
-                        <PriceCard
-                            title="Enterprise"
-                            info="For apps with scale, security, and compliance needs."
-                            price={1999}
-                            options={[
-                                '1,000 of builds',
-                                '5 included concurrencies',
-                                'Send updates to 1M MAUs',
-                                'Slack and strategic support add-on available',
-                            ]}
-                            border="right"
-                            size="big"
-                        />
-                    </section>
+                    {width >= 660 ? <PriceSection /> : <PriceSection withSlider />}
+                    
                 </div>
             </Prices>
         </main>

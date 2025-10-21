@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import './Header.scss'
 import useScreenSize from '../../detectScreenSize';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const HeaderComponent = styled.header`
     width: 100%;
@@ -50,12 +51,7 @@ const Header= () => {
     const {width} = useScreenSize();
 
     const navigate = useNavigate();
-    
-    const handleClickOnProfile = () => {
-        if (width <= 470) {
-            
-        }
-    }
+
 
     return (
         <HeaderComponent>
@@ -67,7 +63,13 @@ const Header= () => {
                     <button>Github</button>
                 </nav>
                 <div className='header_sign_in'>
-                    <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} onClick={handleClickOnProfile} alt="person icon" />
+                    {
+                        width <= 470
+                            ? <Link to={'/login'}>
+                                <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} alt="person icon" />
+                            </Link>
+                            : <img src={`${process.env.PUBLIC_URL}/icons/person.svg`} alt="person icon" />
+                    }
                     <div>
                         <button onClick={() => navigate('/login')}>Sign in</button>
                         <span>/</span>

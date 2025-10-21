@@ -1,4 +1,4 @@
-import { Dispatch, FC, MouseEvent, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { Dispatch, FC, MouseEvent, SetStateAction, useRef, useState } from "react";
 import styled from "styled-components";
 
 const ProgressWrapper = styled.div`
@@ -29,6 +29,24 @@ const ProgressInfoLine = styled.div`
         font-size: 1.4rem;
         line-height: 21.98px;
     }
+
+    @media screen and (max-width: 870px) {
+        & {
+            margin-bottom: 5px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        & {
+            span:first-child {
+                font-size: 1.2rem;
+            }
+            
+            span:last-child {
+                font-size: 1.2rem;
+            }
+        }
+    }
 `;
 
 const BackgroundProgressBar = styled.div`
@@ -42,6 +60,7 @@ const ProgressBar = styled.div`
     height: 100%;
     background-color: ${({theme}) => theme.accent};
     position: relative;
+    border-radius: 100px;
 `
 
 const ProgressBarCircle = styled.div`
@@ -60,6 +79,14 @@ const ProgressBarCircle = styled.div`
 
     &:hover {
         transform: scale(0.85);
+    }
+
+    @media screen and (max-width: 700px) {
+        & {
+            width: 15px;
+            height: 15px;
+            top: -5px;
+        }
     }
 `;
 
@@ -92,10 +119,10 @@ export type unitTypes = 'MAUs' | 'builds' | 'mins';
 interface IProps {
     title: string;
     unitType: unitTypes;
-    setProgresDataValue: Dispatch<SetStateAction<number>>;
+    setProgressDataValue: Dispatch<SetStateAction<number>>;
 }
 
-const CalcModalProgress: FC<IProps> = ({title, unitType, setProgresDataValue}) => {
+const CalcModalProgress: FC<IProps> = ({title, unitType, setProgressDataValue}) => {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [progressWidth, setProgressWidth] = useState(0);
     const [progressValue, setProgressValue] = useState(0);
@@ -122,7 +149,7 @@ const CalcModalProgress: FC<IProps> = ({title, unitType, setProgresDataValue}) =
 
             
             setProgressValue(convertPercentsToValue(unitType, newProgress));
-            setProgresDataValue(progressValue);
+            setProgressDataValue(progressValue);
         }
     };
 
@@ -145,7 +172,7 @@ const CalcModalProgress: FC<IProps> = ({title, unitType, setProgresDataValue}) =
             });
 
             setProgressValue(convertPercentsToValue(unitType, progressWidth));
-            setProgresDataValue(progressValue);
+            setProgressDataValue(progressValue);
         }
     };
 

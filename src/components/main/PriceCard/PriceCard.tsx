@@ -1,6 +1,7 @@
 import { FC } from "react";
 import './PriceCard.scss';
 import styled from "styled-components";
+import useScreenSize from "../../../detectScreenSize";
 
 const PriceArticle = styled.article<{$border: 'left' | 'right' | 'none', $size: 'big' | 'small'}>`
     padding: 21px 25px 25px 25px;
@@ -12,14 +13,15 @@ const PriceArticle = styled.article<{$border: 'left' | 'right' | 'none', $size: 
     text-align: start;
     height: ${({$size}) => $size == 'big' ? 640 : 489}px;
     border-radius: ${({$border}) => {
-        if ($border == 'left') {
+        if ($border === 'left') {
             return '16px 0 0 16px'
-        } else if ($border == 'right') {
+        } else if ($border === 'right') {
             return '0 16px 16px 0';
         } else {
             return 0
         }
     }};
+    transition: 0.5s ease all;
 `;
 
 const CardHeader = styled.div`
@@ -57,6 +59,13 @@ const PriceContainer = styled.div`
     height: 180px;
     display: flex;
     align-items: center;
+
+    @media screen and (max-width: 870px) {
+        & {
+            height: max-content;
+        }
+
+    }
 `;
 
 const PricePerMonth = styled.div<{$priceValue: boolean}>`
@@ -88,7 +97,7 @@ export const WideStyledButton = styled.button`
     color: ${({theme}) => theme.bgMain};
 `;
 
-const PriceCardFooter = styled.div`
+const PriceCardFooter = styled.div<{$isInModal?: boolean}>`
     margin-top: 41px;
     width: 100%;
     height: 100%;
@@ -104,6 +113,12 @@ const PriceCardFooter = styled.div`
         letter-spacing: -0.18px;
         text-transform: uppercase;
         color: ${({theme}) => theme.textSecond};
+    }
+
+    @media screen and (max-width: 870px) {
+        & {
+            display: ${({$isInModal}) => $isInModal ? 'none' : 'flex'};
+        }
     }
 `;
 
@@ -178,6 +193,8 @@ const LiElement: FC<{text: string}> = ({text}) => {
 }
 
 const PriceCard: FC<IPrors> = ({title, info, price, options, border, size}) => {
+    const {width} = useScreenSize();
+
     return (
         <PriceArticle $size={size} $border={border}>
             <CardHeader>
@@ -196,7 +213,7 @@ const PriceCard: FC<IPrors> = ({title, info, price, options, border, size}) => {
                     <WideStyledButton>{price ? 'Select Plan' : 'Start for Free'}</WideStyledButton>
                 </div>
             </PriceContainer>
-            <PriceCardFooter>
+            <PriceCardFooter $isInModal={size === 'small' && true}>
                 <OptionsWrapper>
                     <span>INCLUDES:</span>
                     <ul className="options_ul">

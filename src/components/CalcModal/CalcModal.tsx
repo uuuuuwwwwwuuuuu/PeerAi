@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CalcModalProgress from "./CalcModalProgress";
 import PriceCard from "../main/PriceCard/PriceCard";
 import { useNavigate } from "react-router-dom";
+import useScreenSize from "../../detectScreenSize";
 
 const ModalWindow = styled.div`
     position: fixed;
@@ -16,6 +17,7 @@ const ModalWindow = styled.div`
     margin-top: -300px;
     margin-left: -512px;
     z-index: 5;
+    transition: 0.5s ease all;
     
 
     @media screen and (max-width: 1120px) {
@@ -25,6 +27,27 @@ const ModalWindow = styled.div`
             section {
                 width: 350px;
             }
+        }
+    }
+
+    @media screen and (max-width: 870px) {
+        & {
+            width: 680px;
+            margin-left: -340px;
+        }
+    }
+    
+    @media screen and (max-width: 700px) {
+        & {
+            width: 380px;
+            margin-left: -190px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        & {
+            width: 270px;
+            margin-left: -135px;
         }
     }
 `;
@@ -54,13 +77,20 @@ const HeaderLeftElements = styled.div`
         font-family: JetBrains Mono;
         font-weight: 700;
         font-size: 2rem;
-        line-height: 30px;
         text-transform: uppercase;
         color: ${({theme}) => theme.text};
     }
     
     img {
         height: 100%;
+    }
+
+    @media screen and (max-width: 400px) {
+        & {
+            span {
+                font-size: 1.8rem;
+            }
+        }
     }
 `
 
@@ -72,7 +102,20 @@ const ModalMain = styled.div`
     justify-content: space-between;
 
     @media screen and (max-width: 1120px) {
-        gap: 30px
+        gap: 30px;
+    }
+
+    @media screen and (max-width: 870px) {
+        flex-direction: column-reverse;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 700px) {
+        & {
+            padding: 10px;
+        }
     }
 `;
 
@@ -80,6 +123,15 @@ const MainLeftElements = styled.div`
     width: 100%;
     height: 100%;
     flex: 0 1 447px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    p {
+        text-align: start;
+        font-weight: 400;
+        font-size: 12px;
+    }
 
     @media screen and (max-width: 1120px) {
         flex-basis: 300px;
@@ -92,12 +144,19 @@ const ProgressWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
-`
 
-const StyledP = styled.p`
-    white-space: pre;
-    text-align: start;
-`
+    @media screen and (max-width: 870px) {
+        & {
+            gap: 10px;
+        }
+
+        & > div {
+            height: 75px;
+            border-radius: 10px;
+            padding: 10px 30px;
+        }
+    }
+`;
 
 const MainRightElements = styled.section`
     max-width: 447px;
@@ -106,6 +165,29 @@ const MainRightElements = styled.section`
     article {
         border-radius: 16px;
         border-color: #E0E1E6;
+    }
+
+    @media screen and (max-width: 870px) {
+        & {
+            article {
+                height: max-content;
+            }
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        & {
+            max-width: 250px;
+        }
+    }
+`;
+
+const TextWrapper = styled.div`
+    display: flex;
+    /* margin-top: 12px; */
+
+    span {
+        margin-right: 5px;
     }
 `;
 
@@ -189,6 +271,8 @@ const CalcModal = () => {
 
     const [currentPlan, setCurrentPlan] = useState<Plans>('free');
 
+    const { width } = useScreenSize();
+
     useEffect(() => {
         if (MAUsValue > 50000 || buildsValue > 225 || minsValue > 1000) {
             setCurrentPlan('enterprise');
@@ -220,19 +304,33 @@ const CalcModal = () => {
                         <CalcModalProgress 
                             unitType="MAUs"
                             title="Monthly Active Users"
-                            setProgresDataValue={setMAUsValue}   
+                            setProgressDataValue={setMAUsValue}   
                         />
                         <CalcModalProgress 
                             unitType="builds"
                             title="Builds"
-                            setProgresDataValue={setBuildsValue}    
+                            setProgressDataValue={setBuildsValue}    
                         />
                         <CalcModalProgress 
                             unitType="mins"
                             title="Workflows CI/CD minutes"
-                            setProgresDataValue={setMinsValue}  
+                            setProgressDataValue={setMinsValue}  
                         />
                     </ProgressWrapper>
+                    {
+                        width > 880 &&
+                        <>
+                            <p>Expecting over 1,000,000 MAU? <span>Contact us</span> for a more accurate estimate</p>
+                            <TextWrapper>
+                                <span>*</span>
+                                <p>Your bill may vary from the estimated extra usage based on your specific
+                                    usage. Estimates are based on average MAU, build, and CI/CD minute costs.
+                                    Extra usage is charged when exceeding the resource allotment included in the
+                                    subscription plan.</p>
+                            </TextWrapper>
+                        </>
+                    }
+
                 </MainLeftElements>
                 <MainRightElements>
                     {renderPriceCard(currentPlan)}

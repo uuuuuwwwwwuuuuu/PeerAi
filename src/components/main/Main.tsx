@@ -269,7 +269,7 @@ const PriceSection: FC<{ withSlider?: boolean }> = ({ withSlider }) => {
 
     const touchEnd = () => {
         setIsTouch(false);
-        if (diffX <= -150) {
+        if (diffX <= -100) {
             setCurrentSlideIndex(prevState => {
                 if (prevState >= data.length - 1) {
                     setTranslateValue(prevState * 350);
@@ -279,7 +279,7 @@ const PriceSection: FC<{ withSlider?: boolean }> = ({ withSlider }) => {
                 setTranslateValue(newValue * 350);
                 return newValue;
             });
-        } else if (diffX >= 150) {
+        } else if (diffX >= 100) {
             setCurrentSlideIndex(prevState => {
                 if (prevState <= 0) {
                     setTranslateValue(prevState * 350);

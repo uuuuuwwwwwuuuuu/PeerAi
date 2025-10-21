@@ -17,7 +17,7 @@ const SignUpInfoWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    max-width: 448px;
+    max-width: 468px;
     width: 100%;
 `;
 
@@ -145,6 +145,14 @@ const SignUpWithSocial = styled.div`
             height: 20px;
         }
     }
+
+    @media screen and (max-width: 400px) {
+        & {
+            button {
+                font-size: 1.4rem;
+            }
+        }
+    }
 `;
 
 const ToggleDiv = styled.div`
@@ -167,44 +175,51 @@ const ToggleDiv = styled.div`
     }
 `;
 
+const FormContainer = styled.div`
+    width: 100%;
+    padding: 0 10px;
+`
+
 const Form: FC<{type: 'login' | 'signup'}> = ({type}) => {
     return (
-        <StyledForm>
-            <WrapperForInputs>
-                <InputWrapper>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email address" />
-                </InputWrapper>
-                <InputWrapper>
-                    <label htmlFor="password">Password</label>
-                    <input type="email" id="password" placeholder="Enter your password" />
-                </InputWrapper>
-                <span>Forgot password? <a href="#">Send reset code</a></span>
-                <WideStyledButton >{type === 'signup' ? 'Sign up' : 'Log in'}</WideStyledButton>
-            </WrapperForInputs>
-            <OrWrapper>
-                <div></div>
-                <span>or</span>
-                <div></div>
-            </OrWrapper>
-            <SignUpWithSocial>
-                <WideStyledButton>
-                    <img src={`${process.env.PUBLIC_URL}/icons/google.svg`} alt="google" />
-                    <span>Sign up with Google</span>
-                </WideStyledButton>
-                <WideStyledButton>
-                    <img src={`${process.env.PUBLIC_URL}/icons/github.svg`} alt="google" />
-                    <span>Sign up with GitHub</span>
-                </WideStyledButton>
-                <WideStyledButton>
-                    <span>Sign up with SSO for Enterprise</span>
-                </WideStyledButton>
-            </SignUpWithSocial>
-            <ToggleDiv>
-                <span>Don't have an account? </span>
-                <Link to={type === 'signup' ? '/login' : '/signup'}>{type === 'signup' ? 'Log in' : 'Sign up'}</Link>
-            </ToggleDiv>
-        </StyledForm>
+        <FormContainer>
+            <StyledForm>
+                <WrapperForInputs>
+                    <InputWrapper>
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email address" />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <label htmlFor="password">Password</label>
+                        <input type="email" id="password" placeholder="Enter your password" />
+                    </InputWrapper>
+                    <span>Forgot password? <a href="#">Send reset code</a></span>
+                    <WideStyledButton >{type === 'signup' ? 'Sign up' : 'Log in'}</WideStyledButton>
+                </WrapperForInputs>
+                <OrWrapper>
+                    <div></div>
+                    <span>or</span>
+                    <div></div>
+                </OrWrapper>
+                <SignUpWithSocial>
+                    <WideStyledButton>
+                        <img src={`${process.env.PUBLIC_URL}/icons/google.svg`} alt="google" />
+                        <span>Sign up with Google</span>
+                    </WideStyledButton>
+                    <WideStyledButton>
+                        <img src={`${process.env.PUBLIC_URL}/icons/github.svg`} alt="google" />
+                        <span>Sign up with GitHub</span>
+                    </WideStyledButton>
+                    <WideStyledButton>
+                        <span>Sign up with SSO for Enterprise</span>
+                    </WideStyledButton>
+                </SignUpWithSocial>
+                <ToggleDiv>
+                    <span>Don't have an account? </span>
+                    <Link to={type === 'signup' ? '/login' : '/signup'}>{type === 'signup' ? 'Log in' : 'Sign up'}</Link>
+                </ToggleDiv>
+            </StyledForm>
+        </FormContainer>
     )
 }
 

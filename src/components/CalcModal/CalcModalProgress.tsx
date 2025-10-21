@@ -1,5 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useRef, useState } from "react";
 import styled from "styled-components";
+import useScreenSize from "../../detectScreenSize";
 
 const ProgressWrapper = styled.div`
     background-color: #F9F9FB;
@@ -7,6 +8,12 @@ const ProgressWrapper = styled.div`
     width: 100%;
     height: 110px;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width: 870px) {
+        justify-content: space-around;
+    }
 `;
 
 const ProgressInfoLine = styled.div`
@@ -14,12 +21,12 @@ const ProgressInfoLine = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 24px;
+    align-items: center;
 
     span:first-child {
         font-family: Inter;
         font-weight: 600;
         font-size: 1.6rem;
-        line-height: 26px;
         letter-spacing: -0.18px;
     }
 
@@ -27,7 +34,6 @@ const ProgressInfoLine = styled.div`
         font-family: Inter;
         font-weight: 400;
         font-size: 1.4rem;
-        line-height: 21.98px;
     }
 
     @media screen and (max-width: 870px) {
@@ -39,11 +45,11 @@ const ProgressInfoLine = styled.div`
     @media screen and (max-width: 400px) {
         & {
             span:first-child {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             span:last-child {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
     }
@@ -129,6 +135,8 @@ const CalcModalProgress: FC<IProps> = ({title, unitType, setProgressDataValue}) 
     const [progressWidth, setProgressWidth] = useState(0);
     const [progressValue, setProgressValue] = useState(0);
 
+    const {width} = useScreenSize();
+
     const progressRef = useRef<HTMLDivElement | null>(null);
 
     
@@ -178,12 +186,28 @@ const CalcModalProgress: FC<IProps> = ({title, unitType, setProgressDataValue}) 
         }
     };
 
+    const renderProgressValue = (progressValue: number) => {
+        if (width <= 400) {
+            if (progressValue >= 1000000) {
+                return progressValue.toString()[0] + 'M'
+            } else if (progressValue >= 100000) {
+                return progressValue.toString().substring(0, 3) + 'K'
+            } else if (progressValue >= 10000) {
+                return progressValue.toString().substring(0, 2) + 'K'
+            } else if (progressValue >= 1000) {
+                return progressValue.toString()[0] + 'K'
+            }
+            return progressValue
+        }
+        return progressValue
+    }
+
     return (
         <ProgressWrapper>
             <ProgressInfoLine>
                 <span>{title}</span>
                 <span>
-                    {progressValue} {unitType}
+                    {renderProgressValue(progressValue)} {unitType}
                 </span>
             </ProgressInfoLine>
             <BackgroundProgressBar ref={progressRef}>

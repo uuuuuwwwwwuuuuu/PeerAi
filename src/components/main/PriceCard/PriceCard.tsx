@@ -38,7 +38,6 @@ const CardHeader = styled.div`
     p {
         font-weight: 400;
         font-size: 1.5rem;
-        line-height: 24px;
         letter-spacing: -0.14px;
 
         color: ${({theme}) => theme.textSecond};

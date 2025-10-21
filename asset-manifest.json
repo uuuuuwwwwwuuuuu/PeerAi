@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/PeerAi/static/css/main.96fb56bc.css",
-    "main.js": "/PeerAi/static/js/main.d8d96a1f.js",
+    "main.css": "/PeerAi/static/css/main.59743fdf.css",
+    "main.js": "/PeerAi/static/js/main.4e9cca0e.js",
     "index.html": "/PeerAi/index.html",
-    "main.96fb56bc.css.map": "/PeerAi/static/css/main.96fb56bc.css.map",
-    "main.d8d96a1f.js.map": "/PeerAi/static/js/main.d8d96a1f.js.map"
+    "main.59743fdf.css.map": "/PeerAi/static/css/main.59743fdf.css.map",
+    "main.4e9cca0e.js.map": "/PeerAi/static/js/main.4e9cca0e.js.map"
   },
   "entrypoints": [
-    "static/css/main.96fb56bc.css",
-    "static/js/main.d8d96a1f.js"
+    "static/css/main.59743fdf.css",
+    "static/js/main.4e9cca0e.js"
   ]
 }

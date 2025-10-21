@@ -28,7 +28,25 @@ const HeaderLine = styled.div`
         font-weight: 400;
         font-size: 2.4rem;
         line-height: 100%;
+        transition: 0.3s ease all;
         text-align: center;
+
+        @media (hover:hover) {
+            &:hover {
+                color: ${({theme}) => theme.accent};
+            }
+        }
+    }
+
+    & {
+        img {
+            transition: 0.3s ease all;
+        }
+        @media (hover:hover) {
+            img:hover {
+                transform: scale(1.1);
+            }
+        }
     }
 
     @media screen and (max-width: 770px) {

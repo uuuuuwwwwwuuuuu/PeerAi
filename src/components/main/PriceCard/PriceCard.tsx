@@ -95,6 +95,12 @@ export const WideStyledButton = styled.button`
     border-radius: 100px;
     background-color: ${({theme}) => theme.accent};
     color: ${({theme}) => theme.bgMain};
+    transition: 0.3s ease all;
+    @media (hover:hover) {
+        &:hover {
+            transform: scale(1.05)
+        }       
+    }
 `;
 
 const PriceCardFooter = styled.div<{$isInModal?: boolean}>`

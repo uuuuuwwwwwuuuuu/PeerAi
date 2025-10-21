@@ -69,6 +69,13 @@ const ButtonsWrapper = styled.div`
     button {
         height: 60px;
         width: 232px;
+        transition: 0.3s ease all;
+        
+        @media (hover:hover) {
+            &:hover {
+                transform: scale(1.05)
+            }       
+        }
     }
 
     @media screen and (max-width: 770px) {
@@ -90,6 +97,7 @@ const ButtonsWrapper = styled.div`
             }
         }
     }
+
 `;
 
 const SecondFooterSection = styled.div`
@@ -137,11 +145,17 @@ const PrivacySmallWrapper = styled.div`
 const LinksWrapper = styled.div`
     display: flex;
     gap: 12px;
-
     a {
         font-family: Inter;
         font-weight: 300;
         font-size: 1.6rem;
+        transition: 0.3s ease all;
+
+        @media (hover:hover) {
+            &:hover {
+                color: ${({theme}) => theme.accent};
+            }   
+        }
     }
 `;
 

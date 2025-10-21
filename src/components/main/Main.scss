@@ -72,6 +72,17 @@ main {
     }
 }
 
+.header_buttons_wrapper {
+    button {
+        transition: 0.3s ease all;
+        @media (hover:hover) {
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 470px) {
     .header_buttons_wrapper {
         flex-direction: column;

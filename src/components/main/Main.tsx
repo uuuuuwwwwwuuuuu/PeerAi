@@ -149,6 +149,13 @@ const CompareButton = styled.button`
         text-align: center;
         text-transform: capitalize;
     }
+
+    transition: 0.3s ease all;
+    @media (hover:hover) {
+        &:hover {
+            background-color: ${({theme}) => theme.accent}       
+        }
+    }
 `;
 
 export const StyledButton = styled.button<{ $fill: boolean }>`

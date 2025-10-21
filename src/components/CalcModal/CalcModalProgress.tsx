@@ -76,9 +76,11 @@ const ProgressBarCircle = styled.div`
 
 
     transition: 0.3s ease all;
-
-    &:hover {
-        transform: scale(0.85);
+    @media (hover:hover) {
+        &:hover {
+            transform: scale(0.85);
+        }
+            
     }
 
     @media screen and (max-width: 700px) {
